@@ -31,14 +31,14 @@ function initDB() {
     db.exec(`
       INSERT INTO roles (name) VALUES ('student'), ('expert'), ('company');
       INSERT INTO users (email, password, role_id, name) VALUES 
-        ('student@khibarti.com', '123456', 1, 'طالب تجريبي'),
-        ('expert@khibarti.com', '123456', 2, 'أحمد محمد'),
-        ('company@khibarti.com', '123456', 3, 'شركة داعمة'),
-        ('expert2@khibarti.com', '123456', 2, 'سارة علي'),
-        ('expert3@khibarti.com', '123456', 2, 'خالد حسن'),
-        ('expert4@khibarti.com', '123456', 2, 'فاطمة عمر'),
-        ('expert5@khibarti.com', '123456', 2, 'عمر يوسف'),
-        ('expert6@khibarti.com', '123456', 2, 'نورة أحمد');
+        ('student@khibarti.com', '', 1, 'طالب تجريبي'),
+        ('expert@khibarti.com', '', 2, 'أحمد محمد'),
+        ('company@khibarti.com', '', 3, 'شركة داعمة'),
+        ('expert2@khibarti.com', '', 2, 'سارة علي'),
+        ('expert3@khibarti.com', '', 2, 'خالد حسن'),
+        ('expert4@khibarti.com', '', 2, 'فاطمة عمر'),
+        ('expert5@khibarti.com', '', 2, 'عمر يوسف'),
+        ('expert6@khibarti.com', '', 2, 'نورة أحمد');
       INSERT INTO students (user_id, university, major, graduation_year) VALUES (1, 'جامعة الملك سعود', 'علوم الحاسب', '2025');
       INSERT INTO experts (user_id, specialty, years_experience, rating, sessions_count, bio, list_in_student_app, list_in_company_directory) VALUES 
         (2, 'تطوير البرمجيات', 12, 0, 42, 'خبير في تطوير التطبيقات', 1, 0),
@@ -158,7 +158,7 @@ function migrateAdminRole() {
     const existing = db.prepare("SELECT id FROM users WHERE email = 'admin@khibarti.com'").get();
     if (!existing && adminRole) {
       db.prepare(
-        "INSERT INTO users (email, password, role_id, name) VALUES ('admin@khibarti.com', '123456', ?, 'مدير النظام')"
+        "INSERT INTO users (email, password, role_id, name) VALUES ('admin@khibarti.com', '', ?, 'مدير النظام')"
       ).run(adminRole.id);
     }
   } catch (e) {
@@ -204,7 +204,7 @@ function migrateExpertListsCompanyPartnersAndManager() {
     }
     if (!db.prepare("SELECT id FROM users WHERE email = 'manager@khibarti.com'").get() && mgrRole) {
       db.prepare(
-        "INSERT INTO users (email, password, role_id, name) VALUES ('manager@khibarti.com', '123456', ?, 'مسؤول الشراكة')"
+        "INSERT INTO users (email, password, role_id, name) VALUES ('manager@khibarti.com', '', ?, 'مسؤول الشراكة')"
       ).run(mgrRole.id);
       const mu = db.prepare("SELECT id FROM users WHERE email = 'manager@khibarti.com'").get();
       if (mu) db.prepare("INSERT INTO companies (user_id, company_name, industry) VALUES (?, 'قسم الشراكات', 'التدريب')").run(mu.id);
@@ -225,7 +225,7 @@ function migrateExpertListsCompanyPartnersAndManager() {
     const run = db.transaction(() => {
       for (const p of partners) {
         if (db.prepare('SELECT id FROM users WHERE email = ?').get(p.email)) continue;
-        const ins = db.prepare('INSERT INTO users (email, password, role_id, name) VALUES (?, ?, ?, ?)').run(p.email, '123456', rid, p.name);
+        const ins = db.prepare('INSERT INTO users (email, password, role_id, name) VALUES (?, ?, ?, ?)').run(p.email, '', rid, p.name);
         const uid = ins.lastInsertRowid;
         db.prepare(
           `INSERT INTO experts (user_id, specialty, years_experience, rating, sessions_count, bio, is_verified, list_in_student_app, list_in_company_directory)

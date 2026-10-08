@@ -161,19 +161,19 @@ class DatabaseHelper {
 
     await db.insert('users', {
       'email': 'student@khibarti.com',
-      'password': '123456',
+      'password': '',
       'role_id': roleStudent,
       'name': 'طالب تجريبي',
     });
     await db.insert('users', {
       'email': 'expert@khibarti.com',
-      'password': '123456',
+      'password': '',
       'role_id': roleExpert,
       'name': 'أحمد محمد',
     });
     await db.insert('users', {
       'email': 'company@khibarti.com',
-      'password': '123456',
+      'password': '',
       'role_id': roleCompany,
       'name': 'شركة داعمة',
     });
@@ -201,7 +201,7 @@ class DatabaseHelper {
     for (var i = 4; i <= 8; i++) {
       await db.insert('users', {
         'email': 'expert$i@khibarti.com',
-        'password': '123456',
+        'password': '',
         'role_id': roleExpert,
         'name': _expertNames[i - 4],
       });

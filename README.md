@@ -384,10 +384,10 @@ flutter run
 
 | النوع | البريد | كلمة المرور |
 |-------|--------|-------------|
-| طالب | student@khibarti.com | 123456 |
-| خبير | expert@khibarti.com | 123456 |
-| شركة | company@khibarti.com | 123456 |
-| **مدير** | **admin@khibarti.com** | **123456** |
+| طالب | student@khibarti.com |  |
+| خبير | expert@khibarti.com |  |
+| شركة | company@khibarti.com |  |
+| **مدير** | **admin@khibarti.com** |  |
 
 يُنشأ حساب المدير تلقائياً عند تشغيل السيرفر (دالة `migrateAdminRole` في `server.js`) إذا لم يكن موجوداً. **غيّر كلمة المرور في الإنتاج.**
 
@@ -1347,14 +1347,14 @@ function initDB() {
     db.exec(`
       INSERT INTO roles (name) VALUES ('student'), ('expert'), ('company');
       INSERT INTO users (email, password, role_id, name) VALUES 
-        ('student@khibarti.com', '123456', 1, 'طالب تجريبي'),
-        ('expert@khibarti.com', '123456', 2, 'أحمد محمد'),
-        ('company@khibarti.com', '123456', 3, 'شركة داعمة'),
-        ('expert2@khibarti.com', '123456', 2, 'سارة علي'),
-        ('expert3@khibarti.com', '123456', 2, 'خالد حسن'),
-        ('expert4@khibarti.com', '123456', 2, 'فاطمة عمر'),
-        ('expert5@khibarti.com', '123456', 2, 'عمر يوسف'),
-        ('expert6@khibarti.com', '123456', 2, 'نورة أحمد');
+        ('student@khibarti.com', '', 1, 'طالب تجريبي'),
+        ('expert@khibarti.com', '', 2, 'أحمد محمد'),
+        ('company@khibarti.com', '', 3, 'شركة داعمة'),
+        ('expert2@khibarti.com', '', 2, 'سارة علي'),
+        ('expert3@khibarti.com', '', 2, 'خالد حسن'),
+        ('expert4@khibarti.com', '', 2, 'فاطمة عمر'),
+        ('expert5@khibarti.com', '', 2, 'عمر يوسف'),
+        ('expert6@khibarti.com', '', 2, 'نورة أحمد');
       INSERT INTO students (user_id, university, major, graduation_year) VALUES (1, 'جامعة الملك سعود', 'علوم الحاسب', '2026');
       INSERT INTO experts (user_id, specialty, years_experience, rating, sessions_count, bio) VALUES 
         (2, 'تطوير البرمجيات', 12, 4.8, 42, 'خبير في تطوير التطبيقات'),
@@ -1697,7 +1697,7 @@ flutter run -t lib/main_admin.dart
 
 | البريد | كلمة المرور |
 |--------|-------------|
-| admin@khibarti.com | 123456 |
+| admin@khibarti.com |  |
 
 يُضاف الحساب تلقائياً عند أول تشغيل للسيرفر بعد إضافة دور `admin` في جدول `roles` (انظر `migrateAdminRole` في `server.js`).
 
